@@ -8,15 +8,12 @@ type ThemeToggleProps = {
   className?: string
 }
 
-const labels: Record<string, string> = {
-  light: 'Light theme',
-  dark: 'Dark theme',
-
-}
+const iconClass = 'size-[1.15rem]'
 
 export function ThemeToggle({ scrolled, className }: ThemeToggleProps) {
   const { theme, cycleTheme } = useTheme()
 
+  const isLight = theme === 'light'
 
   return (
     <button
@@ -29,10 +26,18 @@ export function ThemeToggle({ scrolled, className }: ThemeToggleProps) {
           : 'border-white/40 bg-white/10 text-white hover:bg-white/20',
         className,
       )}
-      aria-label={`Color theme: ${labels[theme]}. Click to switch.`}
-      title={`${labels[theme]} — click to cycle`}
+      aria-label={
+        isLight
+          ? 'Color theme: light. Click to switch to dark mode.'
+          : 'Color theme: dark. Click to switch to light mode.'
+      }
+      title={isLight ? 'Light mode — switch to dark' : 'Dark mode — switch to light'}
     >
-      {theme === 'light' ? <Sun className="size-[1.15rem]" strokeWidth={1.75} /> : <Moon className="size-[1.15rem]" strokeWidth={1.75} />}
+      {isLight ? (
+        <Sun className={iconClass} strokeWidth={1.75} aria-hidden />
+      ) : (
+        <Moon className={iconClass} strokeWidth={1.75} aria-hidden />
+      )}
     </button>
   )
 }

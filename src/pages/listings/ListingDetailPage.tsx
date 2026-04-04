@@ -285,7 +285,7 @@ export function ListingDetailPage() {
                 </h2>
                 <ul className="space-y-3">
                   {listing.nearbyHighlights.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-charcoal-700 dark:text-charcoal-200">
+                    <li key={item} className="flex items-start gap-3 text-charcoal-700 dark:text-charcoal-300">
                       <MapPin className="mt-0.5 size-5 shrink-0 text-sage-500" aria-hidden />
                       <span>{item}</span>
                     </li>

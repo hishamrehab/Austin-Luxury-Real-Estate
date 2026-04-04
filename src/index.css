@@ -8,9 +8,52 @@
 @layer base {
   html {
     color-scheme: light;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-charcoal-300) var(--color-charcoal-100);
   }
   html.dark {
     color-scheme: dark;
+    scrollbar-color: var(--color-charcoal-600) var(--color-charcoal-900);
+  }
+
+  html::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  html::-webkit-scrollbar-track {
+    background: var(--color-charcoal-100);
+  }
+  html::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: var(--color-charcoal-300);
+  }
+  html::-webkit-scrollbar-thumb:hover {
+    background: var(--color-charcoal-400);
+  }
+  html.dark::-webkit-scrollbar-track {
+    background: var(--color-charcoal-900);
+  }
+  html.dark::-webkit-scrollbar-thumb {
+    background: var(--color-charcoal-600);
+  }
+  html.dark::-webkit-scrollbar-thumb:hover {
+    background: var(--color-charcoal-500);
+  }
+
+  /* Native controls and text selection follow the active color-scheme */
+  input,
+  textarea,
+  select {
+    color-scheme: inherit;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-sage-500) 32%, transparent);
+    color: var(--color-charcoal-950);
+  }
+  html.dark ::selection {
+    background-color: color-mix(in srgb, var(--color-sage-500) 42%, transparent);
+    color: #fafafa;
   }
 }
 
