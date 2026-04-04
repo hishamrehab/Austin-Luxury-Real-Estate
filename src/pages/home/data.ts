@@ -1,3 +1,5 @@
+import { LISTING_EXTERIOR_IMAGES } from '@/pages/listings/listingImageUrls'
+
 export const HERO_IMAGE =
   'https://static.readdy.ai/image/7845fd8c6eb20521d9ee98b10648e98c/71c7515afb634850a28076d6f37066ad.jpeg'
 
@@ -21,8 +23,7 @@ export const featuredProperties: FeaturedProperty[] = [
     baths: 6,
     sqft: '6,200 sqft',
     neighborhood: 'Westlake Hills',
-    image:
-      'https://readdy.ai/api/search-image?query=luxurious%20modern%20architectural%20masterpiece%20home%20exterior%20with%20clean%20lines%20floor%20to%20ceiling%20windows%20and%20manicured%20landscaping%20set%20against%20clear%20blue%20sky%20in%20upscale%20neighborhood%20featuring%20contemporary%20design%20elements%20and%20premium%20materials%20with%20simple%20elegant%20background&width=800&height=600&seq=1&orientation=landscape',
+    image: LISTING_EXTERIOR_IMAGES['1'],
   },
   {
     id: '2',
@@ -32,8 +33,7 @@ export const featuredProperties: FeaturedProperty[] = [
     baths: 5,
     sqft: '5,100 sqft',
     neighborhood: 'Barton Creek',
-    image:
-      'https://readdy.ai/api/search-image?query=stunning%20contemporary%20luxury%20estate%20home%20with%20stone%20and%20glass%20facade%20surrounded%20by%20lush%20greenery%20and%20mature%20trees%20featuring%20elegant%20architectural%20details%20and%20sophisticated%20outdoor%20living%20spaces%20with%20minimalist%20clean%20background&width=800&height=600&seq=2&orientation=landscape',
+    image: LISTING_EXTERIOR_IMAGES['2'],
   },
   {
     id: '3',
@@ -43,8 +43,7 @@ export const featuredProperties: FeaturedProperty[] = [
     baths: 7,
     sqft: '7,800 sqft',
     neighborhood: 'Mount Bonnell',
-    image:
-      'https://readdy.ai/api/search-image?query=magnificent%20hilltop%20luxury%20residence%20with%20panoramic%20views%20featuring%20modern%20architecture%20infinity%20pool%20and%20expansive%20outdoor%20terraces%20with%20sophisticated%20design%20elements%20and%20premium%20finishes%20against%20simple%20elegant%20backdrop&width=800&height=600&seq=3&orientation=landscape',
+    image: LISTING_EXTERIOR_IMAGES['3'],
   },
   {
     id: '4',
@@ -54,8 +53,7 @@ export const featuredProperties: FeaturedProperty[] = [
     baths: 4,
     sqft: '4,200 sqft',
     neighborhood: 'Tarrytown',
-    image:
-      'https://readdy.ai/api/search-image?query=elegant%20traditional%20luxury%20home%20with%20classic%20architecture%20featuring%20brick%20and%20stone%20exterior%20beautiful%20landscaping%20and%20timeless%20design%20elements%20in%20prestigious%20neighborhood%20with%20clean%20simple%20background&width=800&height=600&seq=4&orientation=landscape',
+    image: LISTING_EXTERIOR_IMAGES['4'],
   },
   {
     id: '5',
@@ -65,8 +63,7 @@ export const featuredProperties: FeaturedProperty[] = [
     baths: 6,
     sqft: '8,500 sqft',
     neighborhood: 'Spanish Oaks',
-    image:
-      'https://readdy.ai/api/search-image?query=spectacular%20mediterranean%20inspired%20luxury%20villa%20with%20terracotta%20roof%20arched%20windows%20and%20resort%20style%20grounds%20featuring%20elegant%20courtyard%20and%20sophisticated%20outdoor%20entertainment%20areas%20with%20minimalist%20clean%20backdrop&width=800&height=600&seq=5&orientation=landscape',
+    image: LISTING_EXTERIOR_IMAGES['5'],
   },
   {
     id: '6',
@@ -76,8 +73,7 @@ export const featuredProperties: FeaturedProperty[] = [
     baths: 5,
     sqft: '5,600 sqft',
     neighborhood: 'Pemberton Heights',
-    image:
-      'https://readdy.ai/api/search-image?query=refined%20contemporary%20luxury%20home%20with%20horizontal%20lines%20natural%20materials%20and%20seamless%20indoor%20outdoor%20living%20spaces%20featuring%20modern%20design%20and%20premium%20craftsmanship%20in%20upscale%20setting%20with%20simple%20elegant%20background&width=800&height=600&seq=6&orientation=landscape',
+    image: LISTING_EXTERIOR_IMAGES['6'],
   },
 ]
 
