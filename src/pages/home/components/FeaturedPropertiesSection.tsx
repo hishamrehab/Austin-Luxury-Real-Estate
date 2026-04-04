@@ -20,7 +20,7 @@ export function FeaturedPropertiesSection() {
           </Link>
         </FadeInSection>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {featuredProperties.map((p, i) => (
+          {featuredProperties.slice(0, 6).map((p, i) => (
             <FadeInSection key={p.id} delay={i * 0.06}>
               <FeaturedPropertyCard property={p} />
             </FadeInSection>

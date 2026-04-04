@@ -8,6 +8,8 @@ export const NEIGHBORHOOD_OPTIONS = [
   'Tarrytown',
   'Spanish Oaks',
   'Pemberton Heights',
+  'Rob Roy',
+  'Downtown Austin',
 ] as const
 
 export type PriceTier = '0' | '1' | '2' | '3' | '4'

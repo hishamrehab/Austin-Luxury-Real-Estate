@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Bath, Bed, Heart, LayoutGrid } from 'lucide-react'
 
 import type { FeaturedProperty } from '@/pages/home/data'
+import { ListingPropertyImage } from '@/pages/listings/components/ListingPropertyImage'
 
 type FeaturedPropertyCardProps = {
   property: FeaturedProperty
@@ -12,10 +13,10 @@ export function FeaturedPropertyCard({ property: p }: FeaturedPropertyCardProps)
     <Link to={`/listings/${p.id}`} className="group block cursor-pointer">
       <div className="relative mb-4 overflow-hidden rounded-2xl shadow-sm ring-1 ring-charcoal-950/5 transition-transform duration-300 group-hover:-translate-y-2 dark:ring-white/10">
         <div className="relative h-80 w-full">
-          <img
+          <ListingPropertyImage
             alt={p.address}
-            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
             src={p.image}
+            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
           <button

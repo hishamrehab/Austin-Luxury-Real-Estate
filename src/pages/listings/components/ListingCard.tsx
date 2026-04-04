@@ -3,6 +3,7 @@ import { Bath, Bed, Heart, LayoutGrid } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import type { FeaturedProperty } from '@/pages/home/data'
+import { ListingPropertyImage } from '@/pages/listings/components/ListingPropertyImage'
 import { formatSqftDisplay } from '@/pages/listings/listingsFilterUtils'
 
 export function ListingCard({
@@ -20,10 +21,10 @@ export function ListingCard({
           layout === 'list' && 'md:h-full md:min-h-[220px] md:w-80 md:shrink-0',
         )}
       >
-        <img
+        <ListingPropertyImage
           alt={p.address}
-          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
           src={p.image}
+          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute top-4 left-4">
           <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-charcoal-700 backdrop-blur-sm dark:bg-charcoal-950/90 dark:text-zinc-100">

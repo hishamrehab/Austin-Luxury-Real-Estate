@@ -2,22 +2,31 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import {
   ArrowLeft,
+  ArrowRight,
   Bath,
   Bed,
   Calendar,
   Check,
   ChevronRight,
+  GraduationCap,
   Heart,
   LayoutGrid,
   Mail,
+  MapPin,
   Phone,
   Printer,
   Share2,
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-import { getListingDetail } from '@/pages/listings/listingsDetailData'
-import { parseSqft } from '@/pages/listings/listingsFilterUtils'
+import {
+  getListingDetail,
+  getRelatedListings,
+  neighborhoodDetailIdFromName,
+} from '@/pages/listings/listingsDetailData'
+import { ListingCard } from '@/pages/listings/components/ListingCard'
+import { ListingsCtaSection } from '@/pages/listings/components/ListingsCtaSection'
+import { parsePriceUsd, parseSqft } from '@/pages/listings/listingsFilterUtils'
 
 export function ListingDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -49,12 +58,22 @@ export function ListingDetailPage() {
   }
 
   const sqftNum = parseSqft(listing.sqft)
+  const priceUsd = parsePriceUsd(listing.price)
+  const pricePerSqft =
+    sqftNum > 0 && priceUsd > 0 ? Math.round(priceUsd / sqftNum).toLocaleString() : null
   const mainImage = listing.gallery[activeIdx] ?? listing.gallery[0]
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(listing.mapQuery)}&output=embed`
+  const neighborhoodPageId = neighborhoodDetailIdFromName(listing.neighborhood)
+  const relatedListings = getRelatedListings(listing.id, 3)
+
+  function focusHeroImage(idx: number) {
+    setActiveIdx(idx)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <>
-      <section className="pt-20">
+      <section id="listing-hero" className="pt-20">
         <div className="relative">
           <div className="relative h-[70vh] w-full">
             <img
@@ -145,6 +164,47 @@ export function ListingDetailPage() {
                 <p className="text-lg leading-relaxed text-charcoal-600 dark:text-charcoal-300">
                   {listing.about}
                 </p>
+                <p className="mt-6 text-lg leading-relaxed text-charcoal-600 dark:text-charcoal-300">
+                  {listing.lifestyle}
+                </p>
+              </div>
+
+              <div>
+                <h2 className="mb-6 font-serif text-2xl font-semibold text-charcoal-950 dark:text-zinc-50">
+                  Listing snapshot
+                </h2>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  <SnapshotCard
+                    label="Price / sq ft"
+                    value={pricePerSqft ? `$${pricePerSqft}` : '—'}
+                    hint={sqftNum ? 'Based on listed living area' : undefined}
+                  />
+                  <SnapshotCard label="Annual property taxes" value={listing.annualTaxes} />
+                  <SnapshotCard label="HOA / community" value={listing.hoa} />
+                  <SnapshotCard label="MLS® # " value={listing.mlsNumber} mono />
+                </div>
+                <p className="mt-4 text-sm text-charcoal-500 dark:text-charcoal-400">
+                  Figures are representative for marketing purposes. Taxes, HOA, and school boundaries should be
+                  verified with county records, the association, and{' '}
+                  <Link to="/mls-disclaimer" className="text-sage-600 underline-offset-2 hover:underline dark:text-sage-400">
+                    MLS sources
+                  </Link>
+                  .
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-white p-6 dark:bg-charcoal-900 dark:ring-1 dark:ring-white/10">
+                <div className="mb-3 flex items-center gap-2">
+                  <GraduationCap className="size-6 text-sage-500" aria-hidden />
+                  <h2 className="font-serif text-xl font-semibold text-charcoal-950 dark:text-zinc-50">
+                    Schools
+                  </h2>
+                </div>
+                <p className="text-charcoal-600 dark:text-charcoal-300">{listing.schoolDistrict}</p>
+                <p className="mt-3 text-sm text-charcoal-500 dark:text-charcoal-400">
+                  School assignments can change. Confirm enrollment eligibility with the district before making an
+                  offer.
+                </p>
               </div>
 
               <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
@@ -185,6 +245,73 @@ export function ListingDetailPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              <div className="rounded-2xl bg-sage-50 p-8 dark:bg-sage-950/25 dark:ring-1 dark:ring-sage-800/40">
+                <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-950 dark:text-zinc-50">
+                  About {listing.neighborhood}
+                </h2>
+                <p className="mb-6 text-lg leading-relaxed text-charcoal-700 dark:text-charcoal-200">
+                  {listing.neighborhoodStory}
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  {neighborhoodPageId ? (
+                    <Link
+                      to={`/neighborhoods/${neighborhoodPageId}`}
+                      className="inline-flex items-center gap-2 rounded-full bg-sage-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sage-700 dark:bg-sage-500 dark:hover:bg-sage-400"
+                    >
+                      Neighborhood guide
+                      <ArrowRight className="size-4" aria-hidden />
+                    </Link>
+                  ) : null}
+                  <Link
+                    to="/neighborhoods"
+                    className="inline-flex items-center gap-2 rounded-full border border-sage-300 bg-white px-5 py-2.5 text-sm font-medium text-charcoal-800 transition-colors hover:bg-white/90 dark:border-sage-700 dark:bg-charcoal-900 dark:text-zinc-100 dark:hover:bg-charcoal-800"
+                  >
+                    All communities
+                  </Link>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="mb-6 font-serif text-2xl font-semibold text-charcoal-950 dark:text-zinc-50">
+                  Nearby
+                </h2>
+                <ul className="space-y-3">
+                  {listing.nearbyHighlights.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-charcoal-700 dark:text-charcoal-200">
+                      <MapPin className="mt-0.5 size-5 shrink-0 text-sage-500" aria-hidden />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h2 className="mb-6 font-serif text-2xl font-semibold text-charcoal-950 dark:text-zinc-50">
+                  Photo gallery
+                </h2>
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                  {listing.gallery.map((src, i) => (
+                    <button
+                      key={src}
+                      type="button"
+                      onClick={() => focusHeroImage(i)}
+                      className={cn(
+                        'relative aspect-[4/3] cursor-pointer overflow-hidden rounded-xl ring-2 transition-all hover:opacity-95',
+                        i === activeIdx
+                          ? 'ring-sage-500'
+                          : 'ring-transparent hover:ring-sage-300 dark:hover:ring-sage-600',
+                      )}
+                      aria-label={`Open photo ${i + 1} in hero viewer`}
+                    >
+                      <img alt="" className="h-full w-full object-cover" src={src} />
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-4 text-sm text-charcoal-500 dark:text-charcoal-400">
+                  Select a photo to preview it in the hero above.
+                </p>
               </div>
 
               <div>
@@ -293,8 +420,21 @@ export function ListingDetailPage() {
               </div>
             </div>
           </div>
+
+          <div className="mt-20 border-t border-charcoal-200 pt-16 dark:border-white/10">
+            <h2 className="mb-10 font-serif text-3xl font-semibold text-charcoal-950 dark:text-zinc-50">
+              Similar properties
+            </h2>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              {relatedListings.map((p) => (
+                <ListingCard key={p.id} property={p} layout="grid" />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
+
+      <ListingsCtaSection />
     </>
   )
 }
@@ -322,6 +462,35 @@ function DetailFact({ label, value }: { label: string; value: string }) {
     <div>
       <p className="mb-1 text-sm text-charcoal-500 dark:text-charcoal-400">{label}</p>
       <p className="font-semibold text-charcoal-950 dark:text-zinc-50">{value}</p>
+    </div>
+  )
+}
+
+function SnapshotCard({
+  label,
+  value,
+  hint,
+  mono,
+}: {
+  label: string
+  value: string
+  hint?: string
+  mono?: boolean
+}) {
+  return (
+    <div className="rounded-2xl border border-charcoal-100 bg-white p-5 dark:border-white/10 dark:bg-charcoal-900">
+      <p className="mb-2 text-xs font-medium tracking-wide text-charcoal-500 uppercase dark:text-charcoal-400">
+        {label}
+      </p>
+      <p
+        className={cn(
+          'text-base font-semibold text-charcoal-950 dark:text-zinc-50',
+          mono && 'font-mono text-sm tracking-tight',
+        )}
+      >
+        {value}
+      </p>
+      {hint ? <p className="mt-2 text-xs text-charcoal-500 dark:text-charcoal-400">{hint}</p> : null}
     </div>
   )
 }
