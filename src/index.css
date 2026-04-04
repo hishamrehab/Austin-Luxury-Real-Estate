@@ -41,3 +41,63 @@
     display: none;
   }
 }
+
+/* Visible horizontal scrollbar (e.g. agent specialty filters) */
+@layer components {
+  .scrollbar-x-theme {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-charcoal-400) var(--color-charcoal-100);
+  }
+  .scrollbar-x-theme::-webkit-scrollbar {
+    height: 10px;
+  }
+  .scrollbar-x-theme::-webkit-scrollbar-track {
+    margin-inline: 2px;
+    border-radius: 9999px;
+    background: var(--color-charcoal-100);
+  }
+  .scrollbar-x-theme::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: var(--color-charcoal-400);
+  }
+  .scrollbar-x-theme::-webkit-scrollbar-thumb:hover {
+    background: var(--color-charcoal-500);
+  }
+  .dark .scrollbar-x-theme {
+    scrollbar-color: var(--color-charcoal-500) var(--color-charcoal-800);
+  }
+  .dark .scrollbar-x-theme::-webkit-scrollbar-track {
+    background: var(--color-charcoal-800);
+  }
+  .dark .scrollbar-x-theme::-webkit-scrollbar-thumb {
+    background: var(--color-charcoal-500);
+  }
+  .dark .scrollbar-x-theme::-webkit-scrollbar-thumb:hover {
+    background: var(--color-charcoal-400);
+  }
+
+  /* Home agents: continuous “train” marquee (two identical halves, linear loop) */
+  @keyframes home-agents-marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .home-agents-marquee-track {
+    animation: home-agents-marquee 30s linear infinite;
+    will-change: transform;
+  }
+
+  .home-agents-marquee-wrap:hover .home-agents-marquee-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-agents-marquee-track {
+      animation: none;
+    }
+  }
+}

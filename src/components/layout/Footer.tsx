@@ -1,8 +1,13 @@
 import { useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Heart } from 'lucide-react'
 
 import { Logo } from '@/components/brand'
+import { cn } from '@/lib/utils'
+
+/** Same stable asset as the home hero — avoids one-off search-image URLs in layout */
+const FOOTER_IMAGE =
+  'https://static.readdy.ai/image/7845fd8c6eb20521d9ee98b10648e98c/71c7515afb634850a28076d6f37066ad.jpeg'
 
 function SocialIcon({
   children,
@@ -56,11 +61,19 @@ function XIcon({ className }: { className?: string }) {
   )
 }
 
+const footerLinkClass =
+  'text-sm text-charcoal-300 transition-colors hover:text-sage-400 dark:text-zinc-400 dark:hover:text-sage-400'
+
 export function SiteFooter() {
   const [email, setEmail] = useState('')
 
   return (
-    <footer className="border-t border-transparent bg-charcoal-950 text-white dark:border-white/10 dark:bg-black">
+    <footer
+      className={cn(
+        'border-t border-charcoal-800/80 bg-charcoal-950 text-white',
+        'dark:border-charcoal-800 dark:bg-charcoal-950',
+      )}
+    >
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <div className="mb-16 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
           <Link
@@ -70,132 +83,107 @@ export function SiteFooter() {
           >
             <Logo variant="onDark" compact={false} />
           </Link>
-          <p className="max-w-md text-sm text-charcoal-300">
+          <p className="max-w-md text-sm text-charcoal-300 dark:text-zinc-400">
             Experience luxury real estate redefined
           </p>
         </div>
 
         <div className="mb-20 grid grid-cols-1 gap-12 md:grid-cols-4">
           <div>
-            <h3 className="mb-6 text-base font-semibold">Buy</h3>
+            <h3 className="mb-6 text-base font-semibold text-zinc-50">Buy</h3>
             <ul className="space-y-4">
               <li>
-                <Link
-                  to="/listings"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
-                  Search Listings
+                <Link to="/listings" className={footerLinkClass}>
+                  Browse listings
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/neighborhoods"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
+                <Link to="/neighborhoods" className={footerLinkClass}>
                   Neighborhoods
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/buy"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
-                  Buyer Services
+                <Link to="/buy" className={footerLinkClass}>
+                  Buyer services
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/contact"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
+                  to="/saved-properties"
+                  className={cn(footerLinkClass, 'inline-flex items-center gap-2')}
                 >
-                  Schedule Tour
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-6 text-base font-semibold">Sell</h3>
-            <ul className="space-y-4">
-              <li>
-                <Link
-                  to="/sell"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
-                  Seller Services
+                  <Heart className="size-4 shrink-0 text-rose-400" aria-hidden />
+                  Saved
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/contact"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
-                  Home Valuation
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/agents"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
-                  Meet Our Agents
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/blog"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
-                  Market Insights
+                <Link to="/contact" className={footerLinkClass}>
+                  Schedule consultation
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="mb-6 text-base font-semibold">Company</h3>
+            <h3 className="mb-6 text-base font-semibold text-zinc-50">Sell</h3>
             <ul className="space-y-4">
               <li>
-                <Link
-                  to="/about"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
-                  About Us
+                <Link to="/sell" className={footerLinkClass}>
+                  Seller services
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/agents"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
-                  Our Team
+                <Link to="/contact" className={footerLinkClass}>
+                  Home valuation
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/contact"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
+                <Link to="/agents" className={footerLinkClass}>
+                  Meet our agents
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className={footerLinkClass}>
+                  Market insights
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="mb-6 text-base font-semibold text-zinc-50">Company</h3>
+            <ul className="space-y-4">
+              <li>
+                <Link to="/about" className={footerLinkClass}>
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/agents" className={footerLinkClass}>
+                  Agents
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className={footerLinkClass}>
                   Contact
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/careers"
-                  className="cursor-pointer text-sm text-charcoal-300 transition-colors hover:text-white"
-                >
+                <Link to="/careers" className={footerLinkClass}>
                   Careers
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <p className="mb-2 font-serif text-lg">© {new Date().getFullYear()} Austin Luxury Realty</p>
-            <p className="mb-6 text-sm text-charcoal-400">All rights reserved</p>
+            <p className="mb-2 font-serif text-lg text-zinc-50">
+              © {new Date().getFullYear()} Austin Luxury Realty
+            </p>
+            <p className="mb-6 text-sm text-charcoal-400 dark:text-zinc-500">All rights reserved</p>
             <div className="flex items-center space-x-4">
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-charcoal-300 transition-colors hover:text-white"
+                className="text-charcoal-300 transition-colors hover:text-sage-400 dark:text-zinc-400 dark:hover:text-sage-400"
                 aria-label="Facebook"
               >
                 <FacebookIcon className="size-6" />
@@ -204,7 +192,7 @@ export function SiteFooter() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-charcoal-300 transition-colors hover:text-white"
+                className="text-charcoal-300 transition-colors hover:text-sage-400 dark:text-zinc-400 dark:hover:text-sage-400"
                 aria-label="Instagram"
               >
                 <InstagramIcon className="size-6" />
@@ -213,7 +201,7 @@ export function SiteFooter() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-charcoal-300 transition-colors hover:text-white"
+                className="text-charcoal-300 transition-colors hover:text-sage-400 dark:text-zinc-400 dark:hover:text-sage-400"
                 aria-label="LinkedIn"
               >
                 <LinkedinIcon className="size-6" />
@@ -222,7 +210,7 @@ export function SiteFooter() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-charcoal-300 transition-colors hover:text-white"
+                className="text-charcoal-300 transition-colors hover:text-sage-400 dark:text-zinc-400 dark:hover:text-sage-400"
                 aria-label="X"
               >
                 <XIcon className="size-6" />
@@ -234,19 +222,21 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 gap-10 border-t border-charcoal-800 pt-12 lg:grid-cols-3">
           <div className="lg:col-span-1">
             <img
-              alt="Luxury interior"
+              alt="Austin luxury residence at dusk"
               className="h-64 w-full rounded-2xl object-cover"
-              src="https://readdy.ai/api/search-image?query=elegant%20luxury%20home%20interior%20with%20modern%20design%20featuring%20sophisticated%20living%20space%20with%20floor%20to%20ceiling%20windows%20and%20refined%20furnishings%20in%20warm%20ambient%20lighting%20with%20clean%20simple%20background&width=400&height=280&seq=401&orientation=landscape"
+              src={FOOTER_IMAGE}
+              width={400}
+              height={280}
             />
           </div>
           <div className="flex items-center lg:col-span-1">
-            <p className="font-serif text-2xl leading-relaxed text-charcoal-300">
+            <p className="font-serif text-2xl leading-relaxed text-charcoal-300 dark:text-zinc-400">
               &ldquo;Redefining luxury living in Austin, one exceptional property at a time.&rdquo;
             </p>
           </div>
           <div className="flex flex-col justify-center lg:col-span-1">
-            <h4 className="mb-2 text-sm text-charcoal-300">Stay Updated</h4>
-            <p className="mb-4 text-sm text-charcoal-400">
+            <h4 className="mb-2 text-sm text-charcoal-300 dark:text-zinc-400">Stay updated</h4>
+            <p className="mb-4 text-sm text-charcoal-400 dark:text-zinc-500">
               Get the latest luxury listings and market insights delivered to your inbox
             </p>
             <form
@@ -257,7 +247,7 @@ export function SiteFooter() {
             >
               <input
                 placeholder="Your email"
-                className="h-12 flex-1 rounded-xl border border-charcoal-700 bg-transparent px-4 text-sm text-white transition-colors placeholder:text-charcoal-500 focus:border-sage-500 focus:outline-none"
+                className="h-12 flex-1 rounded-xl border border-charcoal-700 bg-charcoal-900/40 px-4 text-sm text-white transition-colors placeholder:text-charcoal-500 focus:border-sage-500 focus:outline-none dark:border-charcoal-600 dark:bg-charcoal-900/60 dark:placeholder:text-zinc-500"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -265,7 +255,7 @@ export function SiteFooter() {
               />
               <button
                 type="submit"
-                className="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-sage-500 transition-colors hover:bg-sage-600"
+                className="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-sage-500 transition-colors hover:bg-sage-600 dark:bg-sage-600 dark:hover:bg-sage-500"
                 aria-label="Subscribe"
               >
                 <ArrowRight className="size-6 text-white" />
@@ -275,25 +265,26 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-charcoal-800 pt-8 md:flex-row">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-charcoal-400 md:justify-start">
-            <Link to="/privacy" className="cursor-pointer transition-colors hover:text-white">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-charcoal-400 md:justify-start dark:text-zinc-500">
+            <Link
+              to="/privacy"
+              className="transition-colors hover:text-sage-400 dark:hover:text-sage-400"
+            >
               Privacy Policy
             </Link>
-            <Link to="/terms" className="cursor-pointer transition-colors hover:text-white">
+            <Link
+              to="/terms"
+              className="transition-colors hover:text-sage-400 dark:hover:text-sage-400"
+            >
               Terms of Service
             </Link>
-            <Link to="/mls-disclaimer" className="cursor-pointer transition-colors hover:text-white">
+            <Link
+              to="/mls-disclaimer"
+              className="transition-colors hover:text-sage-400 dark:hover:text-sage-400"
+            >
               MLS Disclaimer
             </Link>
           </div>
-          <a
-            href="https://readdy.ai/?ref=logo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-charcoal-400 transition-colors hover:text-white"
-          >
-            Website Builder
-          </a>
         </div>
       </div>
     </footer>

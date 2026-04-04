@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { CircleDollarSign, Footprints, GraduationCap, Heart, Trash2 } from 'lucide-react'
 
 import { SavedCollectionTabs } from '@/components/saved/SavedCollectionTabs'
+import { ConfirmPopup } from '@/components/ui/ConfirmPopup'
 import { cn } from '@/lib/utils'
 import { useLovedNeighborhoods } from '@/context/LovedNeighborhoodsContext'
 import { getNeighborhoodDetail } from '@/pages/neighborhoods/neighborhoodDetailData'
@@ -231,15 +232,19 @@ export function LovedNeighborhoodsPage() {
                       Keep exploring
                     </Link>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (window.confirm('Remove all neighborhoods from your loved list?')) clearLoved()
-                    }}
-                    className="mt-6 w-full cursor-pointer text-center text-sm font-medium text-charcoal-400 transition-colors hover:text-rose-600 dark:text-zinc-500 dark:hover:text-rose-400"
-                  >
-                    Clear all
-                  </button>
+                  <ConfirmPopup
+                    title="Clear all neighborhoods?"
+                    message="Your loved neighborhoods will be removed on this device. You can add them again anytime."
+                    onConfirm={clearLoved}
+                    trigger={
+                      <button
+                        type="button"
+                        className="mt-6 w-full cursor-pointer text-center text-sm font-medium text-charcoal-400 transition-colors hover:text-rose-600 dark:text-zinc-500 dark:hover:text-rose-400"
+                      >
+                        Clear all
+                      </button>
+                    }
+                  />
                 </div>
               </aside>
             </div>

@@ -50,7 +50,7 @@ export function NeighborhoodDetailPage() {
 
   return (
     <>
-      <section className="pt-20">
+      <section id="neighborhood-hero" className="relative">
         <div className="relative bg-charcoal-950">
           <div className="relative aspect-[21/9] min-h-[min(70vh,720px)] w-full max-h-[85vh] sm:aspect-[2/1] md:min-h-[520px]">
             <NeighborhoodHeroImage
@@ -59,6 +59,11 @@ export function NeighborhoodDetailPage() {
               src={mainImage}
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/25" />
+            {/* Top scrim: hero is full-bleed under the fixed header; bright skies need contrast */}
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-charcoal-950/45 via-charcoal-950/15 to-transparent md:h-44"
+              aria-hidden
+            />
           </div>
 
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pt-20 pb-5 md:pt-24 md:pb-8">
@@ -85,7 +90,7 @@ export function NeighborhoodDetailPage() {
 
           <Link
             to="/neighborhoods"
-            className="absolute top-5 left-5 z-20 flex cursor-pointer items-center gap-2 rounded-full bg-white/95 px-4 py-2.5 text-charcoal-800 shadow-md backdrop-blur-sm transition-colors hover:bg-white md:top-7 md:left-7 dark:bg-charcoal-900/95 dark:text-zinc-100 dark:hover:bg-charcoal-900"
+            className="absolute top-24 left-6 z-10 flex cursor-pointer items-center gap-2 rounded-full bg-white/92 px-4 py-2 text-charcoal-800 shadow-md backdrop-blur-sm transition-colors hover:bg-white dark:bg-charcoal-900/92 dark:text-zinc-100 dark:hover:bg-charcoal-900"
           >
             <ArrowLeft className="size-5 shrink-0" aria-hidden />
             <span className="text-sm font-medium">Back</span>

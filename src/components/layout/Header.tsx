@@ -37,7 +37,7 @@ export function SiteHeader() {
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [pathname])
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
@@ -103,7 +103,12 @@ export function SiteHeader() {
             </Link>
             <Link
               to="/contact"
-              className="cursor-pointer rounded-full bg-sage-500 px-6 py-2.5 text-sm font-medium whitespace-nowrap text-white transition-colors hover:bg-sage-600 dark:bg-sage-600 dark:hover:bg-sage-500"
+              className={cn(
+                'cursor-pointer rounded-full px-6 py-2.5 text-sm font-medium whitespace-nowrap text-white transition-colors',
+                navOnLight
+                  ? 'bg-sage-500 hover:bg-sage-600 dark:bg-sage-600 dark:hover:bg-sage-500'
+                  : 'border border-white/35 bg-sage-500/50 backdrop-blur-md hover:bg-sage-500/60',
+              )}
             >
               Schedule Consultation
             </Link>

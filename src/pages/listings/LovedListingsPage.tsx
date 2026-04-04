@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Bath, Bed, Heart, LayoutGrid, Trash2 } from 'lucide-react'
 
 import { SavedCollectionTabs } from '@/components/saved/SavedCollectionTabs'
+import { ConfirmPopup } from '@/components/ui/ConfirmPopup'
 import { cn } from '@/lib/utils'
 import { useLovedListings } from '@/context/LovedListingsContext'
 import { getFeaturedPropertyById } from '@/pages/home/data'
@@ -218,15 +219,19 @@ export function LovedListingsPage() {
                       Keep browsing
                     </Link>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (window.confirm('Remove all homes from your loved list?')) clearLoved()
-                    }}
-                    className="mt-6 w-full cursor-pointer text-center text-sm font-medium text-charcoal-400 transition-colors hover:text-rose-600 dark:text-zinc-500 dark:hover:text-rose-400"
-                  >
-                    Clear all
-                  </button>
+                  <ConfirmPopup
+                    title="Clear all homes?"
+                    message="Your loved listings will be removed on this device. You can add them again anytime."
+                    onConfirm={clearLoved}
+                    trigger={
+                      <button
+                        type="button"
+                        className="mt-6 w-full cursor-pointer text-center text-sm font-medium text-charcoal-400 transition-colors hover:text-rose-600 dark:text-zinc-500 dark:hover:text-rose-400"
+                      >
+                        Clear all
+                      </button>
+                    }
+                  />
                 </div>
               </aside>
             </div>

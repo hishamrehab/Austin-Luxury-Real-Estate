@@ -74,15 +74,20 @@ export function ListingDetailPage() {
 
   return (
     <>
-      <section id="listing-hero" className="pt-20">
+      <section id="listing-hero" className="relative">
         <div className="relative">
-          <div className="relative h-[70vh] w-full">
+          <div className="relative h-[min(70vh,56rem)] w-full">
             <img
               alt={listing.address}
               className="h-full w-full object-cover object-top"
               src={mainImage}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+            {/* Top scrim: listing hero is full-bleed under the fixed header; bright ceilings need contrast */}
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-charcoal-950/45 via-charcoal-950/15 to-transparent md:h-44"
+              aria-hidden
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" aria-hidden />
           </div>
 
           <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-3">
@@ -106,7 +111,7 @@ export function ListingDetailPage() {
 
           <Link
             to="/listings"
-            className="absolute top-6 left-6 flex cursor-pointer items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-charcoal-800 backdrop-blur-sm transition-colors hover:bg-white dark:bg-charcoal-900/90 dark:text-zinc-100 dark:hover:bg-charcoal-900"
+            className="absolute top-24 left-6 z-10 flex cursor-pointer items-center gap-2 rounded-full bg-white/92 px-4 py-2 text-charcoal-800 shadow-md backdrop-blur-sm transition-colors hover:bg-white dark:bg-charcoal-900/92 dark:text-zinc-100 dark:hover:bg-charcoal-900"
           >
             <ArrowLeft className="size-5 shrink-0" aria-hidden />
             <span className="text-sm font-medium">Back</span>
