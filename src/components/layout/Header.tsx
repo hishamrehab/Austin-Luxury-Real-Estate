@@ -12,7 +12,7 @@ const navLinks = [
   { to: '/neighborhoods', label: 'Neighborhoods' },
   { to: '/agents', label: 'Agents' },
   { to: '/about', label: 'About' },
-] as const
+] as const;
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
