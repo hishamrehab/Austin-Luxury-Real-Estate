@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Footprints,
+  Heart,
   Home,
   MapPin,
   Share2,
@@ -11,6 +12,7 @@ import {
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
+import { useLovedNeighborhoods } from '@/context/LovedNeighborhoodsContext'
 import { getNeighborhoodDetail } from '@/pages/neighborhoods/neighborhoodDetailData'
 import { NEIGHBORHOOD_IMAGE_FALLBACK } from '@/pages/neighborhoods/neighborhoodImageUrls'
 
@@ -18,6 +20,8 @@ export function NeighborhoodDetailPage() {
   const { id } = useParams<{ id: string }>()
   const neighborhood = id ? getNeighborhoodDetail(id) : null
   const [activeIdx, setActiveIdx] = useState(0)
+  const { isLoved, toggleLoved } = useLovedNeighborhoods()
+  const loved = neighborhood ? isLoved(neighborhood.id) : false
 
   useEffect(() => {
     setActiveIdx(0)
@@ -234,14 +238,39 @@ export function NeighborhoodDetailPage() {
                   </Link>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => void sharePage()}
-                  className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-white py-4 text-charcoal-700 shadow-sm transition-colors hover:bg-charcoal-50 dark:bg-charcoal-900 dark:text-charcoal-200 dark:hover:bg-charcoal-800 dark:ring-1 dark:ring-white/10"
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <button
+                    type="button"
+                    onClick={() => toggleLoved(neighborhood.id)}
+                    className={cn(
+                      'flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl py-4 text-sm font-medium shadow-sm transition-colors',
+                      'bg-white text-charcoal-700 hover:bg-charcoal-50',
+                      'dark:bg-charcoal-900 dark:text-charcoal-200 dark:hover:bg-charcoal-800 dark:ring-1 dark:ring-white/10',
+                      loved && 'ring-2 ring-rose-400/60 dark:ring-rose-500/45',
+                    )}
+                    aria-pressed={loved}
+                  >
+                    <Heart
+                      className={cn('size-5 shrink-0', loved && 'fill-rose-500 text-rose-500')}
+                      aria-hidden
+                    />
+                    {loved ? 'Loved' : 'Love'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void sharePage()}
+                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-white py-4 text-sm font-medium text-charcoal-700 shadow-sm transition-colors hover:bg-charcoal-50 dark:bg-charcoal-900 dark:text-charcoal-200 dark:hover:bg-charcoal-800 dark:ring-1 dark:ring-white/10"
+                  >
+                    <Share2 className="size-5 shrink-0" aria-hidden />
+                    Share
+                  </button>
+                </div>
+                <Link
+                  to="/saved-neighborhoods"
+                  className="block w-full text-center text-sm text-charcoal-500 underline-offset-2 hover:text-sage-600 hover:underline dark:text-zinc-500 dark:hover:text-sage-400"
                 >
-                  <Share2 className="size-5 shrink-0" aria-hidden />
-                  Share this community
-                </button>
+                  View all loved neighborhoods
+                </Link>
               </div>
             </div>
           </div>

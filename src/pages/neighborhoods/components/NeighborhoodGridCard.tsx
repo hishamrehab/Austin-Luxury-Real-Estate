@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
-import { CircleDollarSign, Home } from 'lucide-react'
+import { CircleDollarSign, Heart, Home } from 'lucide-react'
 
+import { cn } from '@/lib/utils'
+import { useLovedNeighborhoods } from '@/context/LovedNeighborhoodsContext'
 import type { NeighborhoodGridEntry } from '@/pages/neighborhoods/neighborhoodsData'
 
 type NeighborhoodGridCardProps = {
@@ -15,6 +17,8 @@ export function NeighborhoodGridCard({
   useLayoutVariant = true,
   wrapperClassName,
 }: NeighborhoodGridCardProps) {
+  const { isLoved, toggleLoved } = useLovedNeighborhoods()
+  const loved = isLoved(entry.id)
   const isFeatured = useLayoutVariant && entry.layout === 'featured'
 
   const inner = (
@@ -31,7 +35,7 @@ export function NeighborhoodGridCard({
         src={entry.image}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
-      <div className="absolute top-5 left-5 flex max-w-[calc(100%-2.5rem)] flex-wrap gap-2">
+      <div className="absolute top-5 left-5 z-10 flex max-w-[calc(100%-5rem)] flex-wrap gap-2 pr-2">
         {entry.badges.map((b) => (
           <span
             key={b}
@@ -53,9 +57,7 @@ export function NeighborhoodGridCard({
           {entry.name}
         </h3>
         {entry.description && isFeatured ? (
-          <p className="mb-4 line-clamp-2 max-w-md text-sm leading-relaxed text-white/80">
-            {entry.description}
-          </p>
+          <p className="mb-4 line-clamp-2 max-w-md text-sm leading-relaxed text-white/80">{entry.description}</p>
         ) : null}
         <div className="flex flex-wrap items-center gap-4 text-sm text-white/80">
           <span className="flex items-center gap-1.5">
@@ -72,17 +74,41 @@ export function NeighborhoodGridCard({
     </div>
   )
 
-  const linkClass = 'group relative block cursor-pointer overflow-hidden rounded-2xl'
-
-  const content = (
-    <Link to={`/neighborhoods/${entry.id}`} className={linkClass}>
-      {inner}
-    </Link>
+  const shell = (
+    <div className="group relative cursor-pointer overflow-hidden rounded-2xl">
+      <Link to={`/neighborhoods/${entry.id}`} className="block">
+        {inner}
+      </Link>
+      <button
+        type="button"
+        className={cn(
+          'absolute top-5 right-5 z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full backdrop-blur-sm transition-[transform,colors,box-shadow]',
+          'bg-white/92 text-charcoal-600 shadow-md hover:scale-105 hover:bg-white active:scale-95',
+          'dark:bg-charcoal-950/90 dark:text-zinc-200 dark:hover:bg-charcoal-900',
+          loved && 'ring-2 ring-rose-400/80 dark:ring-rose-500/55',
+        )}
+        aria-label={loved ? `Remove ${entry.name} from loved neighborhoods` : `Save ${entry.name} to loved neighborhoods`}
+        aria-pressed={loved}
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          toggleLoved(entry.id)
+        }}
+      >
+        <Heart
+          className={cn(
+            'size-5 transition-[color,fill,transform]',
+            loved ? 'fill-rose-500 text-rose-500' : 'fill-transparent text-charcoal-700 dark:text-zinc-100',
+          )}
+          strokeWidth={1.75}
+        />
+      </button>
+    </div>
   )
 
   if (wrapperClassName) {
-    return <div className={wrapperClassName}>{content}</div>
+    return <div className={wrapperClassName}>{shell}</div>
   }
 
-  return content
+  return shell
 }

@@ -2,9 +2,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import { RootLayout } from '@/components/layout/RootLayout'
 import { HomePage } from '@/pages/home'
-import { ListingDetailPage, ListingsPage } from '@/pages/listings'
+import { ListingDetailPage, ListingsPage, LovedListingsPage } from '@/pages/listings'
 import { PlaceholderPage } from '@/pages/PlaceholderPage'
-import { NeighborhoodDetailPage, NeighborhoodsPage } from '@/pages/neighborhoods'
+import { LovedNeighborhoodsPage, NeighborhoodDetailPage, NeighborhoodsPage } from '@/pages/neighborhoods'
 import { SellPage } from '@/pages/sell'
 import { AgentsPage } from '@/pages/agents'
 import { AboutPage } from '@/pages/about'
@@ -18,6 +18,8 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="listings" element={<ListingsPage />} />
           <Route path="listings/:id" element={<ListingDetailPage />} />
+          <Route path="saved-properties" element={<LovedListingsPage />} />
+          <Route path="saved-neighborhoods" element={<LovedNeighborhoodsPage />} />
           <Route path="sell" element={<SellPage />} />
           <Route path="neighborhoods" element={<NeighborhoodsPage />} />
           <Route path="neighborhoods/:id" element={<NeighborhoodDetailPage />} />

@@ -11,13 +11,12 @@ type ThemeToggleProps = {
 const labels: Record<string, string> = {
   light: 'Light theme',
   dark: 'Dark theme',
-  system: 'System theme',
+
 }
 
 export function ThemeToggle({ scrolled, className }: ThemeToggleProps) {
   const { theme, cycleTheme } = useTheme()
 
-  const Icon = theme === 'light' ? Sun : theme === 'dark' ? Moon : Monitor
 
   return (
     <button
@@ -33,7 +32,7 @@ export function ThemeToggle({ scrolled, className }: ThemeToggleProps) {
       aria-label={`Color theme: ${labels[theme]}. Click to switch.`}
       title={`${labels[theme]} — click to cycle`}
     >
-      <Icon className="size-[1.15rem]" strokeWidth={1.75} />
+      {theme === 'light' ? <Sun className="size-[1.15rem]" strokeWidth={1.75} /> : <Moon className="size-[1.15rem]" strokeWidth={1.75} />}
     </button>
   )
 }

@@ -154,6 +154,10 @@ export const neighborhoodGridEntries: NeighborhoodGridEntry[] = [
   },
 ]
 
+export function getNeighborhoodGridEntryById(id: string): NeighborhoodGridEntry | undefined {
+  return neighborhoodGridEntries.find((e) => e.id === id)
+}
+
 export type NeighborhoodSpotlight = {
   id: string
   eyebrow: string
@@ -403,3 +407,16 @@ export const neighborhoodInquiryOptions = [
   'Rob Roy',
   'Downtown Austin',
 ] as const
+
+/** Region line for saved-neighborhood cards (derived from community filters). */
+export function neighborhoodRegionLabel(
+  filters: NeighborhoodGridEntry['filters'],
+): string {
+  if (filters.includes('urban')) return 'Central Austin'
+  if (filters.includes('walkable')) return 'Central Austin'
+  if (filters.includes('lakefront')) return 'Lake Austin'
+  if (filters.includes('hill-country')) return 'Hill Country'
+  if (filters.includes('golf-resort')) return 'West Austin'
+  if (filters.includes('family')) return 'West Austin'
+  return 'Austin'
+}

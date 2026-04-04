@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
+import { useLovedListings } from '@/context/LovedListingsContext'
 import {
   getListingDetail,
   getRelatedListings,
@@ -32,11 +33,11 @@ export function ListingDetailPage() {
   const { id } = useParams<{ id: string }>()
   const listing = id ? getListingDetail(id) : null
   const [activeIdx, setActiveIdx] = useState(0)
-  const [saved, setSaved] = useState(false)
+  const { isLoved, toggleLoved } = useLovedListings()
+  const loved = listing ? isLoved(listing.id) : false
 
   useEffect(() => {
     setActiveIdx(0)
-    setSaved(false)
   }, [id])
 
   const shareListing = useCallback(async () => {
@@ -391,14 +392,15 @@ export function ListingDetailPage() {
                 <div className="flex gap-3">
                   <button
                     type="button"
-                    onClick={() => setSaved((s) => !s)}
+                    onClick={() => toggleLoved(listing.id)}
                     className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-white py-3 text-charcoal-600 transition-colors hover:bg-charcoal-50 dark:bg-charcoal-900 dark:text-charcoal-300 dark:hover:bg-charcoal-800"
+                    aria-pressed={loved}
                   >
                     <Heart
-                      className={cn('size-5 shrink-0', saved && 'fill-rose-500 text-rose-500')}
+                      className={cn('size-5 shrink-0', loved && 'fill-rose-500 text-rose-500')}
                       aria-hidden
                     />
-                    <span className="text-sm">{saved ? 'Saved' : 'Save'}</span>
+                    <span className="text-sm">{loved ? 'Loved' : 'Love'}</span>
                   </button>
                   <button
                     type="button"

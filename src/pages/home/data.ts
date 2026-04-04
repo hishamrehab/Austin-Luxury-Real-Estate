@@ -137,6 +137,10 @@ export const featuredProperties: FeaturedProperty[] = [
   },
 ]
 
+export function getFeaturedPropertyById(id: string): FeaturedProperty | undefined {
+  return featuredProperties.find((p) => p.id === id)
+}
+
 export type Agent = {
   name: string
   role: string

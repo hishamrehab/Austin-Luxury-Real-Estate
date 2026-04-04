@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Bath, Bed, Heart, LayoutGrid } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
+import { useLovedListings } from '@/context/LovedListingsContext'
 import type { FeaturedProperty } from '@/pages/home/data'
 import { ListingPropertyImage } from '@/pages/listings/components/ListingPropertyImage'
 import { formatSqftDisplay } from '@/pages/listings/listingsFilterUtils'
@@ -13,6 +14,9 @@ export function ListingCard({
   property: FeaturedProperty
   layout: 'grid' | 'list'
 }) {
+  const { isLoved, toggleLoved } = useLovedListings()
+  const loved = isLoved(p.id)
+
   const inner = (
     <>
       <div
@@ -33,14 +37,21 @@ export function ListingCard({
         </div>
         <button
           type="button"
-          className="absolute top-4 right-4 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/90 text-charcoal-400 backdrop-blur-sm transition-colors hover:text-rose-500 dark:bg-charcoal-950/90 dark:text-zinc-400 dark:hover:text-rose-400"
-          aria-label="Save listing"
+          className={cn(
+            'absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/90 backdrop-blur-sm transition-colors dark:bg-charcoal-950/90',
+            loved
+              ? 'text-rose-500 ring-2 ring-rose-400/60 dark:text-rose-400 dark:ring-rose-500/45'
+              : 'text-charcoal-400 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-rose-400',
+          )}
+          aria-label={loved ? 'Remove from loved properties' : 'Add to loved properties'}
+          aria-pressed={loved}
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
+            toggleLoved(p.id)
           }}
         >
-          <Heart className="size-5" />
+          <Heart className={cn('size-5', loved && 'fill-current')} />
         </button>
       </div>
       <div className={cn('p-6', layout === 'list' && 'md:flex md:flex-1 md:flex-col md:justify-center')}>
