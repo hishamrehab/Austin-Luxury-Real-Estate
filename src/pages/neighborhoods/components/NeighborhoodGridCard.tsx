@@ -31,11 +31,11 @@ export function NeighborhoodGridCard({
         src={entry.image}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
-      <div className="absolute top-5 left-5 flex flex-wrap gap-2">
+      <div className="absolute top-5 left-5 flex max-w-[calc(100%-2.5rem)] flex-wrap gap-2">
         {entry.badges.map((b) => (
           <span
             key={b}
-            className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm"
+            className="rounded-full border border-white/25 bg-charcoal-950/82 px-3 py-1.5 text-xs font-semibold tracking-wide text-white shadow-md backdrop-blur-sm"
           >
             {b}
           </span>

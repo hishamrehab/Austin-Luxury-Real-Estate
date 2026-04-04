@@ -85,7 +85,7 @@ export function NeighborhoodsSpotlightsSection() {
                     {spot.tags.map((t) => (
                       <span
                         key={t}
-                        className="rounded-full border border-charcoal-200 bg-white px-3 py-1.5 text-xs font-medium text-charcoal-700 dark:border-charcoal-600 dark:bg-charcoal-900 dark:text-charcoal-200"
+                        className="rounded-full border border-charcoal-300/90 bg-white px-3.5 py-1.5 text-xs font-semibold text-charcoal-950 shadow-sm ring-1 ring-charcoal-950/[0.06] dark:border-sage-600/40 dark:bg-charcoal-950 dark:text-zinc-50 dark:shadow-md dark:ring-1 dark:ring-white/10"
                       >
                         {t}
                       </span>
