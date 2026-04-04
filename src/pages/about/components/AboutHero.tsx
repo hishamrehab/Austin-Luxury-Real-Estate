@@ -7,18 +7,18 @@ export function AboutHero() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden">
-      <div className="absolute inset-0">
+    <section className="relative min-h-[100dvh] overflow-hidden">
+      <div className="absolute inset-0 min-h-[100dvh]">
         {reduceMotion ? (
           <img
             alt="Austin Luxury Realty office interior with skyline views"
-            className="h-full w-full object-cover object-top"
+            className="h-full min-h-[100dvh] w-full object-cover object-top"
             src={ABOUT_HERO_IMAGE}
           />
         ) : (
           <motion.img
             alt="Austin Luxury Realty office interior with skyline views"
-            className="h-full w-full object-cover object-top"
+            className="h-full min-h-[100dvh] w-full object-cover object-top"
             src={ABOUT_HERO_IMAGE}
             initial={{ scale: 1.05 }}
             animate={{ scale: 1 }}
@@ -28,29 +28,33 @@ export function AboutHero() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-5xl px-6 text-center">
-        {reduceMotion ? (
-          <HeroCopy />
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <HeroCopy />
-          </motion.div>
-        )}
-      </div>
+      <div className="relative z-10 flex min-h-[100dvh] flex-col">
+        <div className="flex flex-1 flex-col items-center justify-center px-6 pt-24 pb-8 text-center sm:pt-28">
+          <div className="mx-auto w-full max-w-5xl">
+            {reduceMotion ? (
+              <HeroCopy />
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <HeroCopy />
+              </motion.div>
+            )}
+          </div>
+        </div>
 
-      <div className="absolute right-0 bottom-0 left-0 border-t border-white/20 bg-white/10 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            {aboutHeroStats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="mb-1 font-serif text-3xl font-semibold text-white">{s.value}</p>
-                <p className="text-sm text-white/70">{s.label}</p>
-              </div>
-            ))}
+        <div className="shrink-0 border-t border-white/20 bg-white/10 backdrop-blur-md pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+          <div className="mx-auto max-w-7xl px-6 py-6 sm:py-8 lg:px-8">
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
+              {aboutHeroStats.map((s) => (
+                <div key={s.label} className="text-center">
+                  <p className="mb-1 font-serif text-3xl font-semibold text-white">{s.value}</p>
+                  <p className="text-sm text-white/70">{s.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
