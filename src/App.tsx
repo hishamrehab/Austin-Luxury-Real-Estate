@@ -4,7 +4,10 @@ import { RootLayout } from '@/components/layout/RootLayout'
 import { HomePage } from '@/pages/home'
 import { ListingsPage } from '@/pages/listings'
 import { PlaceholderPage } from '@/pages/PlaceholderPage'
+import { NeighborhoodsPage } from '@/pages/neighborhoods'
 import { SellPage } from '@/pages/sell'
+import { AgentsPage } from '@/pages/agents'
+import { AboutPage } from '@/pages/about'
 
 function App() {
   return (
@@ -15,9 +18,10 @@ function App() {
           <Route path="listings" element={<ListingsPage />} />
           <Route path="listings/:id" element={<PlaceholderPage />} />
           <Route path="sell" element={<SellPage />} />
-          <Route path="neighborhoods" element={<PlaceholderPage />} />
-          <Route path="agents" element={<PlaceholderPage />} />
-          <Route path="about" element={<PlaceholderPage />} />
+          <Route path="neighborhoods" element={<NeighborhoodsPage />} />
+          <Route path="neighborhoods/:id" element={<PlaceholderPage />} />
+          <Route path="agents" element={<AgentsPage />} />
+          <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<PlaceholderPage />} />
           <Route path="buy" element={<PlaceholderPage />} />
           <Route path="blog" element={<PlaceholderPage />} />
