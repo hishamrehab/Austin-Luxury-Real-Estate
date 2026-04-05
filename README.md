@@ -49,14 +49,14 @@ src/
 │   ├── theme/              # ThemeProvider, header ThemeToggle
 │   └── ui/                 # Shared UI (e.g. confirm popup)
 └── pages/
+    ├── shared/             # Cross-route pieces (e.g. placeholder “coming soon” routes)
     ├── home/               # Landing + featured properties (subset of listings)
     ├── listings/           # Catalog, filters, detail, saved-properties page
     ├── neighborhoods/      # Grid, detail, comparison, map, saved-neighborhoods
     ├── agents/             # Directory, contact dialog, testimonials
     ├── sell/               # Seller journey + valuation form
     ├── about/              # Story, values, leadership
-    ├── contact/            # Offices, map, consultation
-    └── PlaceholderPage.tsx # Buy, blog, careers, legal stubs
+    └── contact/            # Offices, map, consultation
 ```
 
 Path alias: `@/` → `src/` (see `vite.config.ts`).
