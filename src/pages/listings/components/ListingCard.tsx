@@ -1,11 +1,22 @@
 import { Link } from 'react-router-dom'
 import { Bath, Bed, Heart, LayoutGrid } from 'lucide-react'
+import { motion, useReducedMotion } from 'motion/react'
 
 import { cn } from '@/lib/utils'
 import { useLovedListings } from '@/context/LovedListingsContext'
 import type { FeaturedProperty } from '@/pages/home/data'
 import { ListingPropertyImage } from '@/pages/listings/components/ListingPropertyImage'
 import { formatSqftDisplay } from '@/pages/listings/listingsFilterUtils'
+
+const cardSpring = { type: 'spring' as const, stiffness: 380, damping: 32, mass: 0.85 }
+
+const cardVariants = {
+  rest: { y: 0 },
+  hover: {
+    y: -8,
+    transition: cardSpring,
+  },
+}
 
 export function ListingCard({
   property: p,
@@ -16,6 +27,7 @@ export function ListingCard({
 }) {
   const { isLoved, toggleLoved } = useLovedListings()
   const loved = isLoved(p.id)
+  const reduceMotion = useReducedMotion()
 
   const inner = (
     <>
@@ -81,11 +93,22 @@ export function ListingCard({
     <Link
       to={`/listings/${p.id}`}
       className={cn(
-        'group cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:bg-charcoal-900 dark:ring-1 dark:ring-white/10',
-        layout === 'list' && 'md:flex md:max-w-none',
+        'group block cursor-pointer rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-sage-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:focus-visible:ring-offset-charcoal-950',
+        layout === 'list' && 'md:max-w-none',
       )}
     >
-      {inner}
+      <motion.div
+        variants={cardVariants}
+        initial="rest"
+        animate="rest"
+        whileHover={reduceMotion ? undefined : 'hover'}
+        className={cn(
+          'overflow-hidden rounded-2xl bg-white shadow-sm transition-[box-shadow] duration-300 hover:shadow-xl dark:bg-charcoal-900 dark:ring-1 dark:ring-white/10',
+          layout === 'list' && 'md:flex md:max-w-none',
+        )}
+      >
+        {inner}
+      </motion.div>
     </Link>
   )
 }

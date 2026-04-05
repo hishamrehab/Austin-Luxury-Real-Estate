@@ -1,5 +1,6 @@
 import { ChevronDown, Grid3X3, List } from 'lucide-react'
 
+import { FadeInSection } from '@/components/motion'
 import { cn } from '@/lib/utils'
 import {
   NEIGHBORHOOD_OPTIONS,
@@ -45,7 +46,7 @@ export function ListingsFilterBar({
 }: ListingsFilterBarProps) {
   return (
     <section className="border-b border-charcoal-100 bg-white py-8 px-6 lg:px-8 dark:border-charcoal-800 dark:bg-charcoal-950">
-      <div className="mx-auto max-w-7xl">
+      <FadeInSection className="mx-auto max-w-7xl" y={14}>
         <div className="flex flex-col items-center justify-between gap-4 lg:flex-row">
           <div className="flex w-full flex-wrap items-center gap-3 lg:w-auto">
             <div className="relative">
@@ -163,7 +164,7 @@ export function ListingsFilterBar({
             </div>
           </div>
         </div>
-      </div>
+      </FadeInSection>
     </section>
   )
 }

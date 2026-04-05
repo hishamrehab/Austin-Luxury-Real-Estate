@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 
+import { FadeInSection } from '@/components/motion'
 import { cn } from '@/lib/utils'
 import type { FeaturedProperty } from '@/pages/home/data'
 
@@ -38,17 +39,19 @@ export function ListingsResultsSection({ properties, layout, onResetFilters }: L
     return (
       <section className="px-6 py-12 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <p className="text-center text-charcoal-600 dark:text-zinc-400">
-            No properties match your filters. Try adjusting or{' '}
-            <button
-              type="button"
-              className="font-medium text-sage-600 underline hover:text-sage-700 dark:text-sage-400"
-              onClick={onResetFilters}
-            >
-              reset filters
-            </button>
-            .
-          </p>
+          <FadeInSection>
+            <p className="text-center text-charcoal-600 dark:text-zinc-400">
+              No properties match your filters. Try adjusting or{' '}
+              <button
+                type="button"
+                className="font-medium text-sage-600 underline hover:text-sage-700 dark:text-sage-400"
+                onClick={onResetFilters}
+              >
+                reset filters
+              </button>
+              .
+            </p>
+          </FadeInSection>
         </div>
       </section>
     )
@@ -77,13 +80,15 @@ export function ListingsResultsSection({ properties, layout, onResetFilters }: L
             layout === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1',
           )}
         >
-          {visibleProperties.map((p) => (
-            <ListingCard key={p.id} property={p} layout={layout} />
+          {visibleProperties.map((p, i) => (
+            <FadeInSection key={p.id} delay={i * 0.06} y={16}>
+              <ListingCard property={p} layout={layout} />
+            </FadeInSection>
           ))}
         </div>
 
         {hasMore ? (
-          <div className="mt-12 flex justify-center">
+          <FadeInSection className="mt-12 flex justify-center" delay={0.08}>
             <button
               type="button"
               onClick={handleShowMore}
@@ -105,7 +110,7 @@ export function ListingsResultsSection({ properties, layout, onResetFilters }: L
                 'Show more'
               )}
             </button>
-          </div>
+          </FadeInSection>
         ) : null}
       </div>
     </section>
